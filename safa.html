@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carta de Amor</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ffb6d9, #ff7aa8, #ff8fb3);
+      background-size: 400% 400%;
+      animation: bgMove 12s ease infinite;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Imágenes flotantes alrededor de la página */
+    .decor {
+      position: absolute;
+      width: 120px;
+      opacity: 0.95;
+      border-radius: 25px;
+      box-shadow: 0 0 18px rgba(255, 105, 180, 0.7), 0 0 28px rgba(255, 182, 193, 0.6);
+      animation: floatDecor 6s ease-in-out infinite;
+      z-index: 10;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      filter: brightness(1.15) saturate(1.2);
+    }
+
+    /* Posiciones variadas por toda la página */
+    .decor1 { top: 12%; left: 6%; animation-delay: 0s; }
+    .decor2 { top: 10%; right: 6%; animation-delay: 1s; }
+    .decor3 { bottom: 12%; right: 8%; animation-delay: 2s; }
+    
+    
+
+    @keyframes floatDecor {
+      0% { transform: translateY(0) scale(1) rotate(0deg); }
+      25% { transform: translateY(-12px) scale(1.03) rotate(2deg); }
+      50% { transform: translateY(-20px) scale(1.06) rotate(-2deg); }
+      75% { transform: translateY(-12px) scale(1.03) rotate(2deg); }
+      100% { transform: translateY(0) scale(1) rotate(0deg); }
+    }
+      50% { transform: translateY(-18px) scale(1.05); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    @keyframes bgMove {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+      100% { transform: translateY(0); }
+    }
+
+    .container {
+      position: relative;
+      width: 320px;
+      height: 240px;
+      cursor: pointer;
+      transform: translateY(0);
+      transition: transform 0.3s ease;
+      z-index: 5;
+    }
+
+    .container:hover {
+      transform: scale(1.05);
+    }
+
+    /* Sobre */
+    .sobre {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #ff5e7e;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* Corazón del sobre */
+    .sobre::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      width: 40px;
+      height: 40px;
+      background: #ff2e63;
+      clip-path: path("M24 4c-4.418 0-8 3.582-8 8 0-4.418-3.582-8-8-8S0 7.582 0 12c0 9.941 16 20 16 20s16-10.059 16-20c0-4.418-3.582-8-8-8z");
+      transition: transform 0.5s ease;
+    }
+
+    .container:hover .sobre::after {
+      transform: translate(-50%, -50%) scale(1.15);
+    }
+
+    .tapa {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: #ff7694;
+      clip-path: polygon(0 0, 100% 0, 50% 65%);
+      transform-origin: top;
+      transition: transform 1s ease;
+    }
+
+    /* Carta animada */
+    .carta {
+      position: absolute;
+      width: 90%;
+      height: 140%;
+      background: #fff;
+      top: 20px;
+      left: 5%;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      transform: translateY(120%) scale(0.9) rotate(-2deg);
+      opacity: 0;
+      transition: transform 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.6s,
+                  opacity 1s ease 0.6s;
+      z-index: 3;
+    }
+
+    .container.open .tapa {
+      transform: rotateX(180deg);
+    }
+
+    .container.open .carta {
+      transform: translateY(0) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+
+    h2 {
+      text-align: center;
+      color: #ff2e63;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 17px;
+      line-height: 1.5;
+      color: #444;
+    }
+  
+
+    /* 📱 Responsive para iPhone 13 (390px x 844px) */
+    @media (max-width: 430px) {
+
+      body {
+        padding-top: 40px;
+      }
+
+      .container {
+        transform: scale(0.85);
+      }
+
+      .decor {
+        width: 85px;
+        border-radius: 18px;
+      }
+
+      /* Reposicionamiento de imágenes para móvil */
+      .decor1 { top: 8%; left: 5%; }
+      .decor2 { top: 8%; right: 5%; }
+      .decor3 { bottom: 8%; right: 10%; }
+
+      .letter {
+        width: 250px;
+        height: 180px;
+      }
+
+    }
+
+</style>
+</head>
+
+<body>
+  <img src="https://i.imgur.com/sUaJ4QW.jpeg" class="decor decor1" />
+  <img src="https://i.imgur.com/fUn1XlF.jpeg" class="decor decor2" />
+  <img src="https://i.imgur.com/D7Mfmk5.jpeg" class="decor decor3 altpos" />
+
+  <div class="container" onclick="this.classList.toggle('open')">
+    <div class="sobre">
+      <div class="tapa"></div>
+    </div>
+
+    <div class="carta">
+      <h2>Para mi amor ❤️</h2>
+      <p>
+        Eres la razón por la que mis días son más felices.
+        Gracias por existir y por llenar mi vida de magia y amor.
+        Te amo más de lo que las palabras pueden decir.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
