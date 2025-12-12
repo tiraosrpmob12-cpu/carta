@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nuestra Historia ❤️</title>
+  <title>Solo para ti ❤️</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Great+Vibes&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -20,7 +20,6 @@
     body {
       margin: 0;
       padding: 0;
-      /* FONDO ROMÁNTICO ANIMADO */
       background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffd1ff, #fbc2eb);
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
@@ -38,208 +37,224 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* --- ESTILO POLAROID --- */
-    .decor {
-      position: absolute;
-      width: 80px; /* Tamaño ajustado para que quepan todas */
-      padding: 4px 4px 18px 4px;
-      background: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      transition: all 0.3s ease;
-      z-index: 1;
-      opacity: 0.85; /* Ligera transparencia para no saturar */
-      animation: floatDecor 5s ease-in-out infinite;
-      cursor: pointer;
+    /* --- PANTALLA DE CONTRASEÑA --- */
+    #lock-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(15px);
+      z-index: 3000;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+    }
+    .login-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 350px; text-align: center;}
+    .login-box input { width: 100%; padding: 12px; border: 2px solid #ffcad4; border-radius: 10px; margin-bottom: 15px; font-size: 16px; outline: none; text-align: center;}
+    .login-box input:focus { border-color: var(--primary); }
+    .btn-login { background: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 20px; font-size: 16px; cursor: pointer; transition: transform 0.2s; }
+    .btn-login:hover { transform: scale(1.05); }
+    .error-msg { color: red; font-size: 14px; margin-top: 10px; display: none; animation: shake 0.3s; }
+    @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }
+
+    /* --- NUEVA PANTALLA DE TRANSICIÓN (INTRO) --- */
+    #intro-screen {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        display: none;
+        justify-content: center; align-items: center;
+        z-index: 2000;
+        background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffd1ff, #fbc2eb);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+    }
+
+    .intro-text {
+        font-family: 'Great Vibes', cursive;
+        font-size: 4rem;
+        color: #a41638;
+        opacity: 0;
+        text-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        text-align: center;
+        padding: 20px;
+        animation: textEnter 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+                   textFloat 3s ease-in-out infinite 1.5s;
+    }
+
+    @keyframes textEnter {
+        0% { opacity: 0; transform: translateY(40px) scale(0.9); }
+        100% { opacity: 1; transform: translateY(0) scale(1); }
     }
     
-    .decor:hover { 
-      transform: scale(1.5) rotate(0deg) !important; 
-      z-index: 20; 
-      opacity: 1;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    @keyframes textFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
     }
+
+    .fade-out-up {
+        animation: fadeOutUp 0.8s ease forwards !important;
+    }
+    @keyframes fadeOutUp {
+        to { opacity: 0; transform: translateY(-50px) scale(1.1); filter: blur(5px);}
+    }
+
+
+    /* --- CONTENIDO PRINCIPAL --- */
+    #main-content {
+      display: none; width: 100%; height: 100%; position: relative;
+      justify-content: center; align-items: center;
+      animation: fadeInSlow 1s ease;
+    }
+    @keyframes fadeInSlow { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ESTILOS DE LA CARTA Y FOTOS */
+    .decor { position: absolute; width: 80px; padding: 4px 4px 18px 4px; background: white; box-shadow: 0 4px 8px rgba(0,0,0,0.15); transition: all 0.3s ease; z-index: 1; opacity: 0.85; animation: floatDecor 5s ease-in-out infinite; cursor: pointer; }
+    .decor:hover { transform: scale(1.5) rotate(0deg) !important; z-index: 20; opacity: 1; box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+    @keyframes floatDecor { 0%, 100% { transform: translateY(0) rotate(var(--rot)); } 50% { transform: translateY(-8px) rotate(var(--rot)); } }
+    .p1 { top: 5%; left: 10%; --rot: -15deg; } .p2 { top: 5%; right: 10%; --rot: 10deg; } .p3 { bottom: 8%; right: 12%; --rot: -5deg; } .p4 { top: 10%; left: 40%; --rot: 5deg; } .p5 { bottom: 8%; left: 12%; --rot: 12deg; } .p6 { top: 40%; left: 2%; --rot: -8deg; } .p7 { top: 40%; right: 2%; --rot: 8deg; } .p8 { bottom: 5%; left: 45%; --rot: -3deg; }
+
+    .container { position: relative; width: 300px; height: 200px; cursor: pointer; z-index: 10; }
+    .sobre-fondo { position: absolute; width: 100%; height: 100%; background: var(--bg-envelope-dark); border-radius: 8px; z-index: 1; }
+    .tapa { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-envelope-dark); clip-path: polygon(0 0, 100% 0, 50% 50%); transform-origin: top; transition: transform 0.6s ease 0.2s; z-index: 4; }
+    .bolsillo-sides { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: #ff85a1; clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 50%); z-index: 3; }
+    .carta { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 85%; height: 50px; background: var(--bg-page); border-radius: 5px; padding: 20px; box-sizing: border-box; transition: height 0.6s ease, bottom 0.6s ease; z-index: 2; overflow-y: hidden; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
+    .carta h2 { font-family: 'Dancing Script', cursive; color: var(--primary); text-align: center; margin-top: 0; font-size: 28px; }
+    .carta p { font-size: 14px; line-height: 1.5; color: #333; white-space: pre-wrap; }
+    .carta::-webkit-scrollbar { width: 6px; } .carta::-webkit-scrollbar-thumb { background: #ff8fa3; border-radius: 10px; }
     
-    @keyframes floatDecor {
-      0%, 100% { transform: translateY(0) rotate(var(--rot)); }
-      50% { transform: translateY(-8px) rotate(var(--rot)); }
-    }
-
-    /* --- POSICIONES DE LAS 8 FOTOS (Distribución Reloj) --- */
-    /* Antiguas */
-    .p1 { top: 5%; left: 10%; --rot: -15deg; animation-delay: 0s; }
-    .p2 { top: 5%; right: 10%; --rot: 10deg; animation-delay: 1s; }
-    .p3 { bottom: 8%; right: 12%; --rot: -5deg; animation-delay: 2s; }
+    .btn-carta { display: block; width: 100%; background: #ff5e7e; color: white; border: none; padding: 10px; border-radius: 20px; font-family: 'Poppins', sans-serif; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 6px rgba(255, 94, 126, 0.3); transition: transform 0.2s;} .btn-carta:hover{ transform: scale(1.02);}
     
-    /* Nuevas */
-    .p4 { top: 10%; left: 40%; --rot: 5deg; animation-delay: 0.5s; } /* Arriba centro */
-    .p5 { bottom: 8%; left: 12%; --rot: 12deg; animation-delay: 1.5s; } /* Abajo izq */
-    .p6 { top: 40%; left: 2%; --rot: -8deg; animation-delay: 2.5s; } /* Medio izq */
-    .p7 { top: 40%; right: 2%; --rot: 8deg; animation-delay: 3s; } /* Medio der */
-    .p8 { bottom: 5%; left: 45%; --rot: -3deg; animation-delay: 1.2s; } /* Abajo centro */
-
-
-    /* --- CONTENEDOR CENTRAL --- */
-    .container {
-      position: relative;
-      width: 300px; /* Un poco más compacto */
-      height: 200px;
-      cursor: pointer;
-      z-index: 10;
-    }
-
-    /* Partes del sobre */
-    .sobre-fondo {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: var(--bg-envelope-dark);
-      border-radius: 8px;
-      z-index: 1;
-    }
-
-    .tapa {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--bg-envelope-dark);
-      clip-path: polygon(0 0, 100% 0, 50% 50%);
-      transform-origin: top;
-      transition: transform 0.6s ease 0.2s;
-      z-index: 4;
-    }
-
-    .bolsillo-sides {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #ff85a1;
-      clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0, 50% 50%);
-      z-index: 3;
-    }
-
-    /* --- CARTA INTERMINABLE --- */
-    .carta {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 85%;
-      height: 50px;
-      background: var(--bg-page);
-      border-radius: 5px;
-      padding: 20px;
-      box-sizing: border-box;
-      transition: height 0.6s ease, bottom 0.6s ease;
-      z-index: 2;
-      overflow-y: hidden;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-    }
-
-    .carta h2 {
-      font-family: 'Dancing Script', cursive;
-      color: var(--primary);
-      text-align: center;
-      margin-top: 0;
-    }
-
-    .carta p {
-      font-size: 14px;
-      line-height: 1.5;
-      color: #333;
-      white-space: pre-wrap;
-    }
-
-    /* Scrollbar */
-    .carta::-webkit-scrollbar { width: 6px; }
-    .carta::-webkit-scrollbar-thumb { background: #ff8fa3; border-radius: 10px; }
-
-    /* Corazón */
-    .corazon {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 40px;
-      color: #a41638;
-      z-index: 5;
-      animation: latido 1.2s infinite;
-      transition: opacity 0.3s;
-    }
-    @keyframes latido {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.15); }
-    }
-
-    /* --- ESTADO ABIERTO --- */
-    .container.open .tapa { transform: rotateX(180deg); z-index: 1; }
-    .container.open .corazon { opacity: 0; }
-    .container.open .carta {
-      bottom: -40px;
-      height: 380px;
-      z-index: 30; /* Encima de todas las fotos */
-      overflow-y: auto;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-      transition-delay: 0.2s;
-    }
-
-    /* --- MOBILE RESPONSIVE --- */
-    @media (max-width: 450px) {
-      .decor { width: 60px; padding: 2px 2px 12px 2px; } /* Fotos más peques en móvil */
-      /* Ajuste posiciones móvil para que no tapen el centro */
-      .p1 { top: 2%; left: 2%; }
-      .p2 { top: 2%; right: 2%; }
-      .p3 { bottom: 2%; right: 2%; }
-      .p4 { top: 2%; left: 50%; transform: translateX(-50%) !important; }
-      .p5 { bottom: 2%; left: 2%; }
-      .p6 { top: 40%; left: -5px; }
-      .p7 { top: 40%; right: -5px; }
-      .p8 { bottom: 2%; left: 50%; transform: translateX(-50%) !important; }
-      
-      .container.open .carta { height: 350px; width: 300px; }
-    }
-
+    .seccion-carta { animation: fadeIn 0.5s ease; } 
+    .oculto { display: none; } 
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    
+    .corazon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 40px; color: #a41638; z-index: 5; animation: latido 1.2s infinite; transition: opacity 0.3s; } @keyframes latido { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.15); } }
+    .container.open .tapa { transform: rotateX(180deg); z-index: 1; } .container.open .corazon { opacity: 0; } .container.open .carta { bottom: -40px; height: 380px; z-index: 30; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3); transition-delay: 0.2s; }
+    @media (max-width: 450px) { .decor { width: 60px; padding: 2px 2px 12px 2px; } .intro-text { font-size: 3rem; } .container.open .carta { height: 350px; width: 300px; } .p4, .p8 { transform: translateX(-50%) !important; } }
   </style>
 </head>
 
 <body>
-  <img src="https://i.imgur.com/sUaJ4QW.jpeg" class="decor p1" />
-  <img src="https://i.imgur.com/fUn1XlF.jpeg" class="decor p2" />
-  <img src="https://i.imgur.com/D7Mfmk5.jpeg" class="decor p3" />
-  
-  <img src="https://i.imgur.com/MP6oYm8.jpeg" class="decor p4" />
-  <img src="https://i.imgur.com/TTqLISn.jpeg" class="decor p5" />
-  <img src="https://i.imgur.com/sSOClNP.jpeg" class="decor p6" />
-  <img src="https://i.imgur.com/0OLrsDN.jpeg" class="decor p7" />
-  <img src="https://i.imgur.com/QeLf53B.jpeg" class="decor p8" />
 
-  <div class="container" onclick="this.classList.toggle('open')">
-    <div class="sobre-fondo"></div>
-    
-    <div class="carta">
-      <h2>Para mi persona favorita ❤️</h2>
-      <p>
-Hola mi amor,
-
-Hoy quería sorprenderte con algo diferente. Cada una de estas fotos es un recuerdo que guardo en el corazón, pero ninguno se compara con la realidad de tenerte a mi lado.
-
-Eres la razón de mis sonrisas tontas mirando el móvil y la paz que siento cuando todo lo demás es un caos. Gracias por ser tú, por tu luz y por hacerme tan feliz.
-
-(Aquí puedes seguir escribiendo todo lo que sientas... Recuerda que puedes escribir tanto como quieras y aparecerá la barra para bajar).
-
-Te quiero más de lo que las palabras pueden explicar.
-
-Siempre juntos,
-[Tu Nombre]
-      </p>
+  <div id="lock-screen">
+    <div class="login-box">
+      <h2>¿Qué le gusta comer a moja😡?</h2>
+      <input type="text" id="passwordInput" placeholder="Escribe tu respuesta..." autocomplete="off">
+      <button class="btn-login" onclick="checkPassword()">Abrir Carta 🔓</button>
+      <p id="errorMsg" class="error-msg">¡Respuesta incorrecta! 😡 Inténtalo de nuevo.</p>
     </div>
-
-    <div class="bolsillo-sides"></div>
-    <div class="tapa"></div>
-    <div class="corazon">❤</div>
   </div>
+
+  <div id="intro-screen">
+      <h1 class="intro-text">Te amo Safae ❤️</h1>
+  </div>
+
+  <div id="main-content">
+    <img src="https://i.imgur.com/sUaJ4QW.jpeg" class="decor p1" />
+    <img src="https://i.imgur.com/fUn1XlF.jpeg" class="decor p2" />
+    <img src="https://i.imgur.com/D7Mfmk5.jpeg" class="decor p3" />
+    <img src="https://i.imgur.com/MP6oYm8.jpeg" class="decor p4" />
+    <img src="https://i.imgur.com/TTqLISn.jpeg" class="decor p5" />
+    <img src="https://i.imgur.com/sSOClNP.jpeg" class="decor p6" />
+    <img src="https://i.imgur.com/0OLrsDN.jpeg" class="decor p7" />
+    <img src="https://i.imgur.com/QeLf53B.jpeg" class="decor p8" />
+
+    <div class="container" onclick="abrirSobre(this)">
+      <div class="sobre-fondo"></div>
+      <div class="carta">
+        
+        <div id="contenido-principal" class="seccion-carta">
+          <h2>Feliz cumpleaños amooooooooor ❤️</h2>
+          <p>
+Amor, Hoy es tu cumpleaños y quiero felicitarte mucho este dia porque es muy especial y quiero que te sientas asi porque eres la 
+persona mas especial que tengo, se que a veces me porto mal contigo y a veces soy insoportable pero tambien quiero que sepas que
+te elegiria cada dia y que cuando nos veamos ojala poder abrazarte mucho y besarte. 
+
+No entiendo porque llego alguien tan perfecta a mi vida, desde el primer dia ya me demostraste muchisimo y supe que contigo iba a ser 
+diferente a pesar de todos los problemas que tuvimos para conocernos, pero ahora todo va super bien y espero que sigamos siempre bien tu y yo
+siempre que tengamos problemas mi amor bonito, que sepas que eres la princesa mas guapa que hay en el mundo y te quiero taaaaaaaaaanto.
+          </p>
+          <button class="btn-carta" onclick="cambiarSeccion(event, 'contenido-secundario')">Pulza aqui burfa :c 👉</button>
+        </div>
+
+        <div id="contenido-secundario" class="seccion-carta oculto">
+          <h2>¿Por qué tú?</h2>
+          <p>
+-Porque sonrio siempre que hablo contigo <br>
+-Porque sin llegar a verte me has demostrado muchisimoooo<br>
+-Porque eres guapisima<br>
+-Porque eres super buena y achuchableee amoor<br>
+-Porque me encanta tu sonrisa y tus ojos<br>
+-Porque eres literalmente perfecta.
+          </p>
+          <button class="btn-carta" onclick="cambiarSeccion(event, 'contenido-terciario')">Pulza aqui burfa :c 👉</button>
+        </div>
+
+        <div id="contenido-terciario" class="seccion-carta oculto">
+          <h2>Una promesa 🤞</h2>
+          <p>
+Te prometi que iba a estar contigo siempre desde el principio y prometo cumplirlo de nuevo mi amor.
+
+El dia que nos veamos en persona te abrazare taaaaaaanto que diras no muja para tio paraaa, te amo mucho mi niña guapa.
+
+¡Feliz Cumpleaños otra vez mi niña! 🎂
+          </p>
+          <button class="btn-carta" onclick="cambiarSeccion(event, 'contenido-principal')">👈 Volver al inicio</button>
+        </div>
+
+      </div>
+      <div class="bolsillo-sides"></div>
+      <div class="tapa"></div>
+      <div class="corazon">❤</div>
+    </div>
+  </div>
+
+  <script>
+    // --- LÓGICA PRINCIPAL ---
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value;
+      const errorMsg = document.getElementById('errorMsg');
+      const lockScreen = document.getElementById('lock-screen');
+      const introScreen = document.getElementById('intro-screen');
+      const introText = document.querySelector('.intro-text');
+      const mainContent = document.getElementById('main-content');
+      
+      const cleanInput = input.toLowerCase().replace(/\s/g, '').replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u');
+      const respuestasValidas = ['turrondeguebbo', 'turrondehuevo', 'turrondeguevo', 'turrondewebo'];
+
+      if (respuestasValidas.includes(cleanInput)) {
+        lockScreen.style.display = 'none';
+        introScreen.style.display = 'flex';
+        setTimeout(() => {
+            introText.classList.add('fade-out-up');
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+                mainContent.style.display = 'flex';
+            }, 800); 
+        }, 4000); 
+      } else {
+        errorMsg.style.display = 'block';
+        const box = document.querySelector('.login-box');
+        box.style.animation = 'none'; box.offsetHeight; box.style.animation = 'shake 0.3s';
+      }
+    }
+
+    document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') checkPassword();
+    });
+
+    // --- LÓGICA DE LA CARTA ---
+    function abrirSobre(elemento) {
+      if (!event.target.classList.contains('btn-carta')) elemento.classList.toggle('open');
+    }
+    
+    // Función genérica para cambiar entre cualquier sección
+    function cambiarSeccion(event, idSeccion) {
+      event.stopPropagation();
+      // Ocultamos TODAS las secciones posibles
+      document.getElementById('contenido-principal').classList.add('oculto');
+      document.getElementById('contenido-secundario').classList.add('oculto');
+      document.getElementById('contenido-terciario').classList.add('oculto');
+      
+      // Mostramos la que queremos
+      document.getElementById(idSeccion).classList.remove('oculto');
+      document.querySelector('.carta').scrollTop = 0;
+    }
+  </script>
 
 </body>
 </html>
